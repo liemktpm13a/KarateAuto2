@@ -6,7 +6,7 @@ function fn() {
   }
   var config = {
     env: env,
-    myVarName: 'someValue'
+    apiURL: 'https://6281ce11ed9edf7bd8790eea.mockapi.io//api/admin/testing-data'
   }
   if (env == 'dev') {
     // customize
