@@ -56,10 +56,10 @@
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine> 
                     <includes>
-                        <include>**/TodosRunner.java</include>
+                        <include>**/NewmanRunner.java</include>
                     </includes>
                 </configuration>
-            </plugin>          
+            </plugin>      
         </plugins>        
     </build>       
     

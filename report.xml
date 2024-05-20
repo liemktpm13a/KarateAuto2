@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mock API TCS 3" tests="1" time="1.032">
+  <testsuite name="Get All Users" id="2fe60da1-d68a-47d1-aa74-6e11d9c69b8f" timestamp="2024-05-20T10:29:20.058Z" tests="2" failures="1" errors="0" time="1.032">
+    <testcase name="Status code is 200 OK" time="1.032" classname="MockApiTcs3"/>
+    <testcase name="Response body must have the required fields and the data is correct" time="1.032" classname="MockApiTcs3">
+      <failure type="AssertionFailure" message="expected { 'user-name': 'Ryan', age: 39, …(2) } to have property 'id'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: 53a6de53-7624-45fc-acb9-6e5e796329c8.]]>
+        <![CDATA[Collection name: Mock API TCS 3.]]>
+        <![CDATA[Request name: Get All Users.]]>
+        <![CDATA[Test description: Response body must have the required fields and the data is correct.]]>
+        <![CDATA[Error message: expected { 'user-name': 'Ryan', age: 39, …(2) } to have property 'id'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected { 'user-name': 'Ryan', age: 39, …(2) } to have property 'id'
+   at Object.eval sandbox-script.js:2:1).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>
