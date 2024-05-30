@@ -3,6 +3,7 @@
       "collection":"https://api.postman.com/collections/15895208-71136bfa-1d7a-48f1-b825-a5d4ba7531b9?access_key=PMAT-01HYDDJYES08EAMP4J2MC3Y32F",
       "environment":"./mockapi_env.postman_environment.json",
       "csvDataFilePath":"D:\\output.csv",
+      "setCSVDataToGlobVar":true,
       "reportName":"positive-case",
       "iteration":1
     }, 
@@ -10,6 +11,7 @@
       "collection":"https://api.postman.com/collections/15895208-e94ef43f-aa22-4aa6-a4bf-effc82c16364?access_key=PMAT-01HZ19DZFAC05DCY8S41QFKD9Z",
       "environment":"./mockapi_env.postman_environment.json",
       "csvDataFilePath":"D:\\output2.csv",
+      "setCSVDataToGlobVar":true,
       "reportName":"negative-case",
       "iteration":1
     }

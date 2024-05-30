@@ -24,18 +24,17 @@ class NewmanRunner {
     
     @Karate.Test
     Karate testTodos() {
-        getDataFromDBAndWriteToCSVFile();
-        // String cmd = getCommandWithData();
+        getDataFromDBAndWriteToCSVFile("SELECT * FROM USERAPI2", "D:\\output.csv");
         executeCommand();
         return Karate.run("callNewman").relativeTo(getClass());
     } 
-    public void getDataFromDBAndWriteToCSVFile(){
+    public void getDataFromDBAndWriteToCSVFile(String queryToGetDB, String filePathToStoreData){
          try {
             Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//172.18.14.33:1521/orcl2", "hr", "hr");
 
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM USERAPI2");
-            FileWriter csvWriter = new FileWriter("D:\\output.csv");
+            ResultSet resultSet = statement.executeQuery(queryToGetDB);
+            FileWriter csvWriter = new FileWriter(filePathToStoreData);
             while (resultSet.next()) {
                 String userid = resultSet.getString("USER_ID");
                 System.out.println("User id: " + userid);
@@ -85,7 +84,7 @@ class NewmanRunner {
                 String environment = jsonObject.get("environment").getAsString();
                 String csvDataFilePath = jsonObject.get("csvDataFilePath").getAsString();
                 String reportName = jsonObject.get("reportName").getAsString();
-                // int iteration = jsonObject.get("iteration").getAsInt();
+                boolean assignedVarScope = jsonObject.get("setCSVDataToGlobVar").getAsBoolean();
 
                 System.out.println();
                 System.out.println("Object " + (i + 1) + ":");
@@ -93,9 +92,19 @@ class NewmanRunner {
                 System.out.println("Environment: " + environment);
                 System.out.println("CSV File Path: " + csvDataFilePath);
                 System.out.println();
-
-                String csvData = getDataFromCSVFile(csvDataFilePath);
-                String command = "cmd.exe /c newman run \"" + collection + "\" -e \"" + environment + "\" --global-var csv-data=\"" + csvData + "\" --reporters junit --reporter-junit-export ./target/newman-reports/\"" + reportName + "\".xml";
+                
+                String command = "";
+        
+                if(csvDataFilePath.length() > 0){
+                   String csvData = getDataFromCSVFile(csvDataFilePath);
+                    if(assignedVarScope == true){
+                        command = "cmd.exe /c newman run \"" + collection + "\" -e \"" + environment + "\" --global-var csv-data=\"" + csvData + "\" --reporters junit --reporter-junit-export ./target/newman-reports/\"" + reportName + "\".xml";
+                    } else {
+                        command = "cmd.exe /c newman run \"" + collection + "\" -e \"" + environment + "\" --env-var csv-data=\"" + csvData + "\" --reporters junit --reporter-junit-export ./target/newman-reports/\"" + reportName + "\".xml";
+                    }  
+                } else {
+                    command = "cmd.exe /c newman run \"" + collection + "\" -e \"" + environment + "\" --reporters junit --reporter-junit-export ./target/newman-reports/\"" + reportName + "\".xml";
+                }
             
                 System.out.println(command);
                 Process process = java.lang.Runtime.getRuntime().exec(command);
@@ -104,17 +113,5 @@ class NewmanRunner {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //  try {
-        //     String csvData = getDataFromCSVFile("D:\\output.csv");
-        //     String command = "cmd.exe /c newman run https://api.postman.com/collections/15895208-71136bfa-1d7a-48f1-b825-a5d4ba7531b9?access_key=PMAT-01HYDDJYES08EAMP4J2MC3Y32F -e ./mockapi_env.postman_environment.json --global-var csv-data=\"" + csvData + "\" --reporters junit --reporter-junit-export ./target/newman-reports/report.xml";
-            
-        //     System.out.println(command);
-        //     Process process = java.lang.Runtime.getRuntime().exec(command);
-        //     process.waitFor();
-
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
     }   
 }
